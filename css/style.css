@@ -20,4 +20,11 @@
   cursor: pointer;
   background-color: rgb(228, 224, 224);
   padding: 2px 8px;
+}
+
+.stats_section {
+  margin-inline: 80px;
+  padding: 5px 40px;
+  border: 1px solid;
+  margin-bottom: 50px;
 }/*# sourceMappingURL=style.css.map */

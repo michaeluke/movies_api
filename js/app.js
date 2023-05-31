@@ -114,6 +114,7 @@ debugger
      
       
       renderHello(data);
+      stats(data);
 
       
     },
@@ -147,6 +148,35 @@ function renderHello(data) {
 
 };
 
+
+function stats(data){
+
+
+var top_rated;
+var rating=0;
+$("#current_page").text("Current Page: " + model.get_page())
+$("#number_movies").text("Number of Movies:" + data.results.length);
+
+for(var i = 0 ; i<data.results.length;i++){
+
+var rt = data.results[i].vote_average;
+
+if(rt>rating){
+  var index = i;
+  rating = rt;
+
+}
+
+}
+$("#Top_rated").text("Rating:" + data.results[index].title)
+$("#rating").text("Top Rated:" +  rating);
+
+
+
+
+
+
+}
 
 
 
