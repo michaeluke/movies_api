@@ -1,0 +1,28 @@
+@media (max-width: 767px) {
+    body {
+
+        width: 100%;
+        font-size: 14px;
+
+        img{
+            max-height: 350px;
+        }
+    }
+}
+
+.header{
+    margin-left: 100px;
+}
+
+.footer{
+margin-top: 50px;
+justify-content: center;
+
+    button{
+
+        border-radius: 10%;
+        cursor: pointer;
+        background-color: rgb(228, 224, 224);
+        padding: 2px 8px;
+    }
+}
