@@ -1,6 +1,9 @@
+
 const model = (function() {
   // Private links 
   var page = 1;
+  var data =[];
+  var current_page_url;
   const configuration_link = "https://api.themoviedb.org/3/configuration";
   const movies = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`;
   const base_url = "https://image.tmdb.org/t/p/w500/"
@@ -11,26 +14,36 @@ const model = (function() {
     get_configuration_link: function() { 
       return configuration_link;
     },
+
     get_movies: function() {
-      
-      return movies;
+      this.movies =`https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`;
+      return this.movies;
     },
     get_base_url : function(){
       return base_url;
     },
 
     get_next_page: function() {
-      page +=1;
-      return `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`
+      page+=1;
+      this.movies =`https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`
+      return this.movies
     },
     get_previous_page: function() {
       page-=1;
-      return `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`;
+      this.movies =`https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`
+      return this.movies
     },
     get_page: function() {
       
       return page;
-    }
+    },
+    set_current_page : function(data){
+      if(data===undefined){
+      return `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=1`
+      }
+    var current_page = data;
+    return current_page;
+    },
     
   };
 })();
@@ -55,7 +68,7 @@ function display_first_page() {
            
                
                 
-                <div class="card" style="max-height:500px">
+                <div class="card card_class">
                    
                     <img class="card-img-top img-fluid" src="${model.get_base_url()}{{poster_path}}" alt="Card image cap">
                     <div class="card-body d-flex flex-column text-center">
@@ -101,7 +114,7 @@ function fetch_api(page){
     var movies_data = page;
   }
 
-debugger
+
   $.ajax({
     url: movies_data,
     method: 'GET',
@@ -112,9 +125,10 @@ debugger
       },
     success: function(data) {
      
-      
+      model.data = [];
       renderHello(data);
       stats(data);
+      model.data.push(data.results)
 
       
     },
@@ -122,6 +136,7 @@ debugger
       console.log('error:' + err)
     }
     });
+
 
 }
 
@@ -132,7 +147,7 @@ function renderHello(data) {
     movies.reverse(); //to display movies in correct order
     movies.forEach(function(movie) {
       console.log(movie)
-      debugger
+      
       const {title,vote_average,poster_path} = movie;
     
       var first_page =  new display_first_page();
@@ -152,7 +167,7 @@ function renderHello(data) {
 function stats(data){
 
 
-var top_rated;
+//var top_rated;
 var rating=0;
 $("#current_page").text("Current Page: " + model.get_page())
 $("#number_movies").text("Number of Movies:" + data.results.length);
@@ -210,6 +225,67 @@ debugger
 
 })
 
+eventsMediator.on("card-clicked",function(movie_title){
+debugger
+modal(movie_title);
+
+
+
+
+})
+
+function current_api(data){
+
+
+  var fetched_data = data
+  return {
+
+    f_data : fetched_data
+  }
+}
+
+
+
+function modal(title){
+
+
+ 
+  
+  
+  
+ 
+debugger
+  var modal_img;
+  var modal_title = title;
+  var modal_rating;
+  var modal_overview;
+
+  var data =model.data[0];
+  for(var i=0;i<data.length;i++){
+    debugger
+    if(data[i].title == title){
+
+      modal_img = model.get_base_url() + data[i].poster_path
+      modal_rating = data[i].vote_average;
+      modal_overview = data[i].overview;
+
+    }
+    
+  }
+   
+  
+
+  $("#img-modal").attr("src",modal_img);
+    
+  $("#title").text(modal_title);
+  
+  $("#rating").text("IMDB RATING: " + modal_rating)
+  $("#description").text("Description:  " + modal_overview)
+  //show the modal on the web page
+  $('#myModal').modal('show');
+}
+
+
 $(document).ready(function(){
 //Create card and append in body
 
@@ -227,6 +303,7 @@ if(event == 'previous'){
  
   if(model.get_page() != 1){
     eventsMediator.emit('page_change', model.get_previous_page());
+   // model.current_page_url = model.get_next_page();
 
  }
 }
@@ -235,13 +312,30 @@ if(event == 'previous'){
 if(event =='next'){
   eventsMediator.emit('page_change', model.get_next_page());
 
+
+  //model.current_page_url = model.get_next_page();
+
+
 }
 
 
 })
 
-//Bind using mustache js library
 
+
+
+$(document).on('click', '.card', function(e) {
+
+
+var movie = e.target.closest(".card");
+
+var tit = $(movie).find(".card-text");
+
+var title = tit.text();
+
+eventsMediator.emit("card-clicked",title);
+
+})
 
 
 

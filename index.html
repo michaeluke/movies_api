@@ -16,28 +16,65 @@
 </head>
 
 <body>
+    <div class="modal fade modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
 
 
-
-<div class="header">
-<h1>Movies</h1>
-</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
 
-<div class="stats_section">
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6" style="padding-top: 8px;">
+
+                            <img class="img-modal" id="img-modal" src="" alt="place" style="width: 100%;"> </img>
+
+                        </div>
+                        <div class="col-md-6 d-flex flex-column">
+                            <h1 id="title"> </h1>
+                            <div id="rating">
+
+                            </div>
+
+                            <div id="description">
+
+                            </div>
+                        </div>
+                    </div>
 
 
-    <h2>Stats</h2>
-    <div id="current_page"> </div>
-    <div id="number_movies"></div>
-    <div id="Top_rated"></div>
-    <div id="rating"></div>
+                </div>
 
-</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="header">
+        <h1>Movies</h1>
+    </div>
+
+
+    <div class="stats_section">
+
+
+        <h2>Stats</h2>
+        <div id="current_page"> </div>
+        <div id="number_movies"></div>
+        <div id="Top_rated"></div>
+        <div id="rating"></div>
+
+    </div>
     <div class="container">
 
         <div class="row" id="row">
-            
+
 
 
         </div>

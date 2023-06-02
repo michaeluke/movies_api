@@ -27,4 +27,8 @@
   padding: 5px 40px;
   border: 1px solid;
   margin-bottom: 50px;
+}
+
+.card {
+  max-height: 500px;
 }/*# sourceMappingURL=style.css.map */
