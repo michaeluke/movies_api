@@ -99,12 +99,12 @@ var modal_module ={
 
 var movies_module = {
   
-  init: function (e) {
+  init: function () {
 
-    eventsMediator.on("page_change", function (url){
+    eventsMediator.on("page_change",(url) =>{
       debugger;
-      $("#row").empty();
-      movies_module.fetch_movies(url);
+    //  $("#row").empty();
+      this.fetch_movies(url);
       // this.render();
     })
 
@@ -141,53 +141,23 @@ var movies_module = {
     });
   },
 
-  
-  create_page :function() {
-    var temp = `
-    <div class="col-md-3 gx-4 gy-4" id="parent_temp">
-    </div>
-     <script id="temp" type="x-tmpl-mustache">
-     <div class="wrapper">    
-                  <div class="card card_class">
-                      <img class="card-img-top img-fluid" src="${model.get_base_url()}{{poster_path}}" alt="Card image cap">
-                      <div class="card-body d-flex flex-column text-center">
-                          <p class="card-text">{{title}}</p>
-                          <p class = "rating">{{vote_average}}</p>
-                      </div>                   
-                  </div>              
-   </div>     
-   </script>
-    `;
-  
-    //object to have public access to it.
-  
-    return {
-      append_page: function () {
-        $("#row").prepend(temp);
-      },
-  
-      template: temp,
-    };
-  },
-  
 
+  
   render: function (data) {
     if (data != null) {
+     // $("#parent_temp").empty();
       var movies = data.results;
-      movies.reverse();
-      movies.forEach(function (movie) {
+     // movies.reverse();
+      debugger
+      console.log($("#temp"))
         // console.log(movie);
-        const { title, vote_average, poster_path } = movie;
-        var first_page = new movies_module.create_page();
-        first_page.append_page();
-        const template = document.getElementById("temp").innerHTML;
-        const rendered = Mustache.render(template, {
-          poster_path,
-          title,
-          vote_average,
-        });
-        document.getElementById("parent_temp").innerHTML = rendered;
-      });
+        // const { title, vote_average, poster_path } = movie;
+        // this.create_page();
+        const template = $("#temp").html();
+        const rendered = Mustache.render(template, {movies});
+        $("#parent_temp").html(rendered)
+        
+    
     }
   },
 };
@@ -220,8 +190,8 @@ $(document).ready(function () {
   movies_module.init();
   stats_module.init();
 
-  $(".footer").bind("click", function (e) {
-    debugger;
+  $(".footer").bind("click", function(e) {
+  
     var event = e.target.id;
 
     if (event == "previous") {

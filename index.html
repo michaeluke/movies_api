@@ -73,9 +73,7 @@
     </div>
     <div class="container">
 
-        <div class="row" id="row">
-
-
+        <div class="row" id="parent_temp">
 
         </div>
 
@@ -91,7 +89,22 @@
 
 
 
+    <script id="temp" type="x-tmpl-mustache">
 
+        {{#movies}}
+        <div class="col-md-3 gx-4 gy-4" >
+        <div class="wrapper">    
+                     <div class="card card_class">
+                         <img class="card-img-top img-fluid" src="https://image.tmdb.org/t/p/w500/{{poster_path}}" alt="Card image cap">
+                         <div class="card-body d-flex flex-column text-center">
+                             <p class="card-text">{{title}}</p>
+                             <p class = "rating">{{vote_average}}</p>
+                         </div>                   
+                     </div>              
+      </div>   
+    </div>  
+      {{/movies}}
+      </script>
 
 
     <!-- scripts here -->
